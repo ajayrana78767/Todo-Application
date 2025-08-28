@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_application/provider/todo_provider.dart';
+import 'package:todo_application/widgets/my_app_button.dart';
 import 'package:todo_application/widgets/my_app_text_field.dart';
 
 class AddTodoScreen extends StatefulWidget {
@@ -9,6 +12,8 @@ class AddTodoScreen extends StatefulWidget {
 }
 
 class _AddTodoScreenState extends State<AddTodoScreen> {
+  final TextEditingController titleContoller = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +32,35 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       ),
       body: Column(
         children: [
-          MyAppTextField(label: 'Title',)
+          MyAppTextField(
+            label: 'Title',
+            minLines: 1,
+            maxLines: 1,
+            controller: titleContoller,
+          ),
+          MyAppTextField(
+            label: 'Description',
+            minLines: 4,
+            maxLines: 4,
+            controller: descriptionController,
+          ),
+          Consumer<TodoProvider>(
+            builder: (context, todoProvider, child) {
+              return MyAppButton(
+                label: 'Add Todo',
+                onPressed: () {
+                  todoProvider.addTodo(
+                    titleContoller.text,
+                    descriptionController.text,
+                    context,
+                  );
+                  debugPrint(
+                    'Title: ${titleContoller.text}, Description: ${descriptionController.text}',
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );

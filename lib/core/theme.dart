@@ -12,4 +12,14 @@ ThemeData appTheme = ThemeData(
     backgroundColor: Colors.black,
     foregroundColor: Colors.white,
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: WidgetStatePropertyAll(Colors.orange[700]),
+      foregroundColor: WidgetStatePropertyAll(Colors.white),
+      shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      minimumSize: WidgetStateProperty.all(Size(double.infinity, 48)),
+    ),
+  ),
 );

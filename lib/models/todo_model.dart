@@ -1,11 +1,14 @@
+import 'package:hive/hive.dart';
+
+part 'todo_model.g.dart'; 
+
+@HiveType(typeId: 0)
 class TodoModel {
-  final int count;
+  @HiveField(0)
   final String title;
+
+  @HiveField(1)
   final String description;
 
-  const TodoModel({
-    required this.count,
-    required this.title,
-    required this.description,
-  });
+  const TodoModel({required this.title, required this.description});
 }
