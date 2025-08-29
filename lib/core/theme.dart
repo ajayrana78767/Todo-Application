@@ -22,4 +22,5 @@ ThemeData appTheme = ThemeData(
       minimumSize: WidgetStateProperty.all(Size(double.infinity, 48)),
     ),
   ),
+  popupMenuTheme: PopupMenuThemeData(color: Colors.white,surfaceTintColor:  Colors.white)
 );

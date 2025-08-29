@@ -31,17 +31,21 @@ class TodoProvider with ChangeNotifier {
 
   // }
 
-  // Add the todos
+  // Add the todo
   void addTodo(
+    final int id,
     final String title,
     final String description,
     BuildContext context,
   ) {
     setLoading(true);
-    final todo = TodoModel(title: title, description: description);
+    final todo = TodoModel(id:id ,title: title, description: description);
     _todos.add(todo);
     box.add(todo);
     setLoading(false);
     Navigator.pop(context);
   }
+
+  // Update todo
+ 
 }

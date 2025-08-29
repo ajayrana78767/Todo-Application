@@ -62,14 +62,27 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
                   ),
-                  trailing: PopupMenuButton(
-                    
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem(child: Text('Delete')),
-                        PopupMenuItem(child: Text('Edit')),
-                      ];
+                  trailing: PopupMenuButton<String>(
+                    icon: Icon(Icons.more_vert, color: Colors.black),
+                    onSelected: (value) {
+                      if (value == 'delete') {
+                      } else if (value == 'edit') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddTodoScreen(
+                              title: todo.title,
+                              description: todo.description,
+                              isEdit: true,
+                            ),
+                          ),
+                        );
+                      }
                     },
+                    itemBuilder: (context) => [
+                      PopupMenuItem(value: 'delete', child: Text('Delete')),
+                      PopupMenuItem(value: 'edit', child: Text('Edit')),
+                    ],
                   ),
                 ),
               );
