@@ -62,6 +62,15 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
                   ),
+                  trailing: PopupMenuButton(
+                    
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(child: Text('Delete')),
+                        PopupMenuItem(child: Text('Edit')),
+                      ];
+                    },
+                  ),
                 ),
               );
             },
