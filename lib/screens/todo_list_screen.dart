@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_application/provider/todo_provider.dart';
 import 'package:todo_application/screens/add_todo_screen.dart';
+import 'package:todo_application/widgets/task_card.dart';
 
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({super.key});
@@ -16,7 +17,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
       appBar: AppBar(
         backgroundColor: Colors.orange[700],
         title: Text(
-          'Todo List',
+          'My Tasks',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
@@ -26,65 +27,33 @@ class _TodoListScreenState extends State<TodoListScreen> {
             return Center(child: CircularProgressIndicator());
           }
           if (todoProvider.todos.isEmpty) {
-            return Center(child: Text('No todo found'));
+            return Center(child: Text('No task found'));
           }
           return ListView.builder(
             itemCount: todoProvider.todos.length,
             itemBuilder: (context, index) {
               final todo = todoProvider.todos[index];
-              return Container(
-                margin: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.25),
-                      offset: Offset(0, 4),
-                      spreadRadius: 0,
+              return TaskCard(
+                index: index,
+                title: todo.title,
+                description: todo.description,
+                onEdit: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddTodoScreen(
+                        title: todo.title,
+                        description: todo.description,
+                        index: index,
+                        id: todo.id,
+                        isEdit: true,
+                      ),
                     ),
-                  ],
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.black,
-                    child: Text(
-                      '${index + 1}',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  title: Text(
-                    todo.title,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  subtitle: Text(
-                    todo.description,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-                  ),
-                  trailing: PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert, color: Colors.black),
-                    onSelected: (value) {
-                      if (value == 'delete') {
-                      } else if (value == 'edit') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddTodoScreen(
-                              title: todo.title,
-                              description: todo.description,
-                              isEdit: true,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    itemBuilder: (context) => [
-                      PopupMenuItem(value: 'delete', child: Text('Delete')),
-                      PopupMenuItem(value: 'edit', child: Text('Edit')),
-                    ],
-                  ),
-                ),
+                  );
+                },
+                onDelete: () {
+                  todoProvider.deleteTodo(index);
+                },
               );
             },
           );

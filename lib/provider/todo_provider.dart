@@ -24,13 +24,6 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // // // Fetch the all todos
-  // void fetchTodos() {
-  //   setLoading(true);
-  //   Future.delayed(Duration(seconds: 3));
-
-  // }
-
   // Add the todo
   void addTodo(
     final int id,
@@ -39,7 +32,7 @@ class TodoProvider with ChangeNotifier {
     BuildContext context,
   ) {
     setLoading(true);
-    final todo = TodoModel(id:id ,title: title, description: description);
+    final todo = TodoModel(id: id, title: title, description: description);
     _todos.add(todo);
     box.add(todo);
     setLoading(false);
@@ -47,5 +40,35 @@ class TodoProvider with ChangeNotifier {
   }
 
   // Update todo
- 
+void updateTodo({
+  required int index,
+  required int id,
+  required String title,
+  required String description,
+  required BuildContext context,
+}) async {
+  setLoading(true);
+  final updatedTodo = TodoModel(id: id, title: title, description: description);
+
+  // Update in-memory list
+  _todos[index] = updatedTodo;
+
+  // Update Hive by key
+  final key = box.keyAt(index);
+  await box.put(key, updatedTodo);
+
+  setLoading(false);
+  Navigator.pop(context);
+}
+
+  // Delete todo
+  void deleteTodo(int index) async {
+    setLoading(true);
+    final key = box.keyAt(index);
+
+    await box.delete(key);
+    _todos.removeAt(index);
+
+    setLoading(false);
+  }
 }
