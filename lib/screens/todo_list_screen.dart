@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_application/feature/core/network/dio_client.dart';
+import 'package:todo_application/feature/data/repositories/history_repository.dart';
+import 'package:todo_application/feature/presentation/screens/character_screen.dart';
+import 'package:todo_application/feature/presentation/screens/history_screen.dart';
 import 'package:todo_application/provider/todo_provider.dart';
 import 'package:todo_application/screens/add_todo_screen.dart';
 import 'package:todo_application/widgets/task_card.dart';
@@ -59,14 +63,46 @@ class _TodoListScreenState extends State<TodoListScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddTodoScreen()),
-          );
-        },
-        child: Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: 'addTaskBtn',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddTodoScreen()),
+              );
+            },
+            child: Icon(Icons.add),
+          ),
+          SizedBox(height: 24),
+          FloatingActionButton(
+            heroTag: 'historyBtn',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HistoryScreen(
+                    historyRepository: HistoryRepository(DioClient()),
+                  ),
+                ),
+              );
+            },
+            child: Icon(Icons.history),
+          ),
+          SizedBox(height: 24),
+          FloatingActionButton(
+            heroTag: 'charactersBtn',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CharacterScreen()),
+              );
+            },
+            child: Icon(Icons.emoji_emotions_outlined),
+          ),
+        ],
       ),
     );
   }
