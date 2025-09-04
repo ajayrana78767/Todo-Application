@@ -6,7 +6,8 @@ import 'package:todo_application/feature/presentation/provider/characters_provid
 import 'package:todo_application/feature/presentation/provider/history_provider.dart';
 import 'package:todo_application/models/todo_model.dart';
 import 'package:todo_application/provider/todo_provider.dart';
-import 'package:todo_application/screens/todo_list_screen.dart';
+import 'package:todo_application/screens/home_screen.dart';
+// import 'package:todo_application/screens/todo_list_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: appTheme,
         title: 'Flutter Demo',
-        home: TodoListScreen(),
+        home: HomeScreen(),
       ),
     );
   }
